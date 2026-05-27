@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>深圳市光明书院</title>
+
+<隐藏微信覆盖在按钮上的蓝遮罩>
+<style>
+*{margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color: transparent;}
+button, a, .btn, [onclick] {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button:active, .btn:active {
+  opacity: 0.85;
+  transform: scale(0.97);
+  transition: all 0.1s;
+}
+:root{--red:#b91c1c;--bg:#f5f7fa;--txt:#333;--gray:#666}
+body{font-family:system-ui,sans-serif;color:var(--txt);line-height:1.6}
+a{text-decoration:none;color:inherit}
+/* [1] 语言切换 */
+.lang{margin-left:20px;padding:4px 12px;border:1px solid var(--red);border-radius:12px;background:#fff;color:var(--red);font-size:11px;cursor:pointer}
+/* [2] 导航栏 */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.logo{width:36px;height:36px;border-radius:50%;background:var(--red);margin-right:10px;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:cover}
+.name{font-size:15px;font-weight:600}
+.menu{display:flex;gap:20px;margin-left:auto}
+.menu a{font-size:13px;color:var(--gray)}
+.menu a:hover{color:var(--red)}
+/* [3] Hero主区域 */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px;background:url(jiaoxuelou.htlm.png) center/cover no-repeat;position:relative}
+.hero::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.6)}
+.hero>*{position:relative}
+.hero h1{font-size:clamp(26px,5vw,40px);font-weight:700;margin-bottom:10px}
+.hero p{font-size:clamp(14px,2vw,18px);color:#555;margin-bottom:24px}
+.btn{padding:10px 24px;background:var(--red);color:#fff;border-radius:20px;font-size:14px}
+/* [4] 数据栏 */
+.data{display:flex;justify-content:center;gap:30px;padding:30px 20px;background:var(--bg);flex-wrap:wrap}
+.data-item{text-align:center}
+.data-num{font-size:clamp(22px,4vw,32px);font-weight:700;color:var(--red)}
+.data-label{font-size:13px;color:var(--gray)}
+/* [5] 内容区块 */
+.section{padding:50px 20px;max-width:1000px;margin:0 auto}
+.section h2{font-size:clamp(20px,3vw,26px);font-weight:700;text-align:center;margin-bottom:24px}
+.section p{font-size:14px;line-height:1.9;color:var(--gray)}
+/* [6] 数据卡片 */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.box{background:var(--bg);border-radius:10px;padding:20px;text-align:center}
+.box-num{font-size:26px;font-weight:700;color:var(--red)}
+.box-label{font-size:13px;color:var(--gray)}
+.box-sublabel{font-size:11px;color:#999;margin-top:4px}
+/* [7] 办学特色 */
+.features{padding:60px 4%;background:#fff}
+.features .section-title{text-align:center;font-size:20px;color:#333;margin-bottom:24px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;max-width:1000px;margin:0 auto}
+.feature-card{background:#f5f7fa;border-radius:12px;padding:24px;text-align:center}
+.feature-icon{width:60px;height:60px;margin-bottom:14px;object-fit:contain}
+.feature-card h3{font-size:16px;color:#c41e3a;margin-bottom:8px}
+.feature-hook{font-size:14px;color:#666;font-style:italic;margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed #ddd}
+.feature-detail{text-align:left;color:#555;line-height:1.7;font-size:13px}
+.feature-detail p:first-child{font-weight:600;color:#333;margin-bottom:6px}
+.feature-card:nth-child(2) .feature-icon,
+.feature-card:nth-child(3) .feature-icon {
+  font-size: 1.4rem;
+}
+/* 响应式 */
+@media(max-width:768px){
+.nav{flex-wrap:wrap;padding:8px 12px}
+.name{font-size:13px}
+.menu{width:100%;justify-content:center;order:3;gap:12px}
+.menu a{font-size:12px}
+.lang{margin-left:auto;padding:4px 10px}
+.hero{min-height:100vh}
+.data{gap:16px;padding:20px 12px}
+.data-item{min-width:40%}
+.data-num{font-size:20px}
+.section{padding:40px 16px}
+.grid{grid-template-columns:repeat(2,1fr)}
+.join-divider{display:none}
+.features{padding:40px 5%}
+.features .section-title{font-size:18px;margin-bottom:20px}
+.features-grid{grid-template-columns:1fr;gap:16px}
+.feature-card{padding:20px}
+.feature-card:nth-child(3){max-width:100%;margin:0 auto}
+.feature-icon{font-size:2rem;margin-bottom:12px}
+}
+@media(min-width:769px){
+.features-grid{grid-template-columns:repeat(2,1fr)}
+.feature-card:nth-child(3){grid-column:1/-1;max-width:48%;margin:0 auto}
+}
+@media(max-width:480px){
+.cards{grid-template-columns:1fr}
+}
+.join-content{display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap}
+.join-info{flex:1;min-width:280px}
+.join-divider{width:1px;height:200px;background:linear-gradient(to bottom,transparent,var(--gray),transparent);align-self:center;flex-shrink:0}
+.qr-codes{display:flex;gap:20px;align-items:flex-start;flex:1;justify-content:center}
+@media(max-width:768px){
+.join-divider{display:none}
+}
+.qr-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+.qr-item img{width:100px;height:100px;border-radius:8px;object-fit:cover}
+.qr-item span{font-size:12px;color:var(--gray)}
+.qr-title{color:#000;font-weight:bold;font-size:14px;margin:0 0 2px 0;line-height:1.2}
+.qr-sub{font-size:12px;color:var(--gray);margin:0;line-height:1.2}
+.qr-tip{font-size:11px;color:#999;margin:0;line-height:1.2}
+.footer-notice{text-align:center;padding:16px 20px;background:var(--bg);color:var(--gray);font-size:12px;line-height:1.8}
+/* 联系我们样式 */
+.section-title{font-size:20px;font-weight:600;color:#1a1a1a;text-align:center;margin:24px 0 16px;position:relative}
+.section-title::after{content:'';display:block;width:40px;height:3px;background:#b91c1c;margin:8px auto 0;border-radius:2px}
+.contact-card{background:#fff;margin:0 16px 10px;padding:20px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.contact-row{display:flex;align-items:baseline;margin-bottom:12px;font-size:14px}
+.contact-row:last-child{margin-bottom:0}
+.contact-label{color:#888;min-width:80px;flex-shrink:0;font-size:13px}
+.contact-value{color:#333;flex:1;word-break:break-all}
+.contact-value a{color:#2b7de9;text-decoration:none}
+.footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 16px;background:#fff;margin:10px auto;max-width:500px}
+.footer-item{text-align:center}
+.footer-item-title{font-size:14px;color:#666;margin-bottom:10px}
+.footer-item img{width:80px;height:80px;border-radius:8px;object-fit:cover}
+.footer-hint{text-align:center;font-size:12px;color:#999;padding:8px 16px 16px;background:#fff}
+.team-images{display:flex;flex-direction:column;gap:0}
+.team-images img{width:100%;height:auto;display:block}
+/* 电脑端响应式 */
+@media(min-width:768px){
+.nav{padding:10px 40px}
+.menu{gap:24px}
+.menu a{font-size:14px}
+.hero{padding:100px 40px}
+.data{gap:40px;padding:40px}
+.data-item{min-width:auto}
+.section{max-width:900px;padding:60px 40px}
+.section h2{margin-bottom:32px}
+.grid{grid-template-columns:repeat(3,1fr);gap:20px}
+.cards{gap:20px}
+.contact-card{max-width:700px;margin:0 auto;padding:30px}
+.footer-grid{max-width:500px;margin:0 auto;gap:24px}
+.footer-item img{width:100px;height:100px}
+.footer-item-title{margin-bottom:12px}
+.footer-hint{padding:12px 16px 20px}
+.footer-notice{padding:20px 40px}
+}
+/* 语言切换 */
+[data-lang=en]{display:none}
+:lang(en) [data-lang=zh]{display:none}
+:lang(en) [data-lang=en]{display:inline}
+</style>
+<link rel="stylesheet" href="carousel.css">
+</head>
+<body>
+<!-- [2] 导航栏 -->
+<nav class="nav">
+<div class="logo"><img src="eeee.html.jpg" onerror="this.style.display='none'" alt=""></div>
+<span class="name"><span data-lang="zh">深圳市光明书院</span><span data-lang=en>GUANGMING SCHOOL</span></span>
+<div class="menu">
+<a href="#home"><span data-lang="zh">首页</span><span data-lang=en>Home</span></a>
+<a href="#about"><span data-lang="zh">学校概况</span><span data-lang=en>About</span></a>
+<a href="#team"><span data-lang="zh">师资力量</span><span data-lang=en>Faculty</span></a>
+<a href="#feature"><span data-lang="zh">办学特色</span><span data-lang=en>Features</span></a>
+<a href="#contact"><span data-lang="zh">联系我们</span><span data-lang=en>Contact Us</span></a>
+</div>
+<button class="lang" onclick="document.documentElement.lang=document.documentElement.lang==='zh-CN'?'en':'zh-CN'">EN</button>
+</nav>
+
+<!-- [3] Hero主区域 -->
+<section class="hero" id="home">
+<h1><span data-lang="zh">深圳市光明书院</span><span data-lang=en>GUANGMING SCHOOL</span></h1>
+<p><span data-lang="zh">办一所有教育温度的现代化优质特色学校</span><span data-lang=en>A Modern High-Quality School with Educational Warmth</span></p>
+<a href="#about" class="btn"><span data-lang="zh">了解更多</span><span data-lang=en>Learn More</span></a>
+</section>
+
+<!-- [4] 数据栏 -->
+<div class="data">
+<div class="data-item"><div class="data-num">48,000<span data-lang="zh">㎡</span><span data-lang=en>㎡</span></div><div class="data-label"><span data-lang="zh">占地面积</span><span data-lang=en>Area</span></div></div>
+<div class="data-item"><div class="data-num">28,000<span data-lang="zh">㎡</span><span data-lang=en>㎡</span></div><div class="data-label"><span data-lang="zh">建筑面积</span><span data-lang=en>Building</span></div></div>
+<div class="data-item"><div class="data-num">69</div><div class="data-label"><span data-lang="zh">教学班</span><span data-lang=en>Classes</span></div></div>
+<div class="data-item"><div class="data-num">240+</div><div class="data-label"><span data-lang="zh">教职工</span><span data-lang=en>Staff</span></div></div>
+</div>
+
+<!-- [5] 学校概况 -->
+<section class="section" id="about">
+<h2><span data-lang="zh">学校概况</span><span data-lang=en>About Us</span></h2>
+<p><span data-lang="zh">深圳市光明书院是经深圳市教育局批准的高品质民办学校，精专高等高中教育，走读、寄宿、接送服务相结合。学校以"办一所有教育温度的现代化优质特色学校"为办学目标，坚持"立德树人，全面发展"的办学理念，实施有温度的全面发展教育，依法治校，文化育人，质量立校，特色兴校。</span><span data-lang=en>Guangming School is a high-quality private school approved by Shenzhen Education Bureau, dedicated exclusively to senior high school teaching . Our goal is a modern high-quality school with educational warmth, adhering to moral education and all-round development.</span></p>
+</section>
+
+<!-- [5.1] 轮播图 -->
+<div class="carousel" id="carousel">
+<div class="carousel-track" id="carouselTrack">
+<img src="10.jpg" alt="">
+<img src="02.jpg" alt="">
+<img src="mootcour.jpg" alt="">
+<img src="04.jpg" alt="">
+<img src="05.jpg" alt="">
+<img src="restaurant.jpg" alt="">
+<img src="activity.jpg" alt="">
+<img src="03.jpg" alt="">
+<img src="09.jpg" alt="">
+<img src="party.jpg" alt="">
+</div>
+<div class="carousel-dots" id="carouselDots"></div>
+</div>
+
+<!-- [6] 师资力量 -->
+<section class="section" id="team">
+<h2><span data-lang="zh">师资力量</span><span data-lang=en>Faculty</span></h2>
+<div class="grid">
+<div class="box"><div class="box-num data-number" data-target="108" data-suffix="人">0</div><div class="box-label"><span data-lang="zh">书院专职教师</span><span data-lang=en>Full-time Teachers</span></div></div>
+<div class="box"><div class="box-num data-number" data-target="36" data-suffix="人">0</div><div class="box-label"><span data-lang="zh">硕士以上学历</span><span data-lang=en>Master's Degree</span></div></div>
+<div class="box"><div class="box-num data-number" data-target="100" data-suffix="%">0</div><div class="box-label"><span data-lang="zh">全员本科及以上学历</span><span data-lang=en>All Bachelor's+</span></div></div>
+<div class="box"><div class="box-num data-number" data-target="30" data-suffix="人">0</div><div class="box-label"><span data-lang="zh">区级以上骨干教师</span><span data-lang=en>District Leaders</span></div></div>
+<div class="box"><div class="box-num data-number" data-target="240" data-suffix="+">0</div><div class="box-label"><span data-lang="zh">教职工</span><span data-lang=en>Staff</span></div><div class="box-sublabel"><span data-lang="zh">含专任教师与行政人员</span><span data-lang=en>Teachers & Staff</span></div></div>
+<div class="box"><div class="box-num data-number" data-target="69">0</div><div class="box-label"><span data-lang="zh">教学班</span><span data-lang=en>Classes</span></div><div class="box-sublabel"><span data-lang="zh">覆盖高中各年级</span><span data-lang=en>All high school grades</span></div></div>
+</div>
+<div class="team-images">
+<img src="t2.jpg" alt="师资团队"><img src="t3.jpg" alt="师资团队">
+</div>
+</section>
+
+<!-- [7] 办学特色 -->
+<section class="features" id="feature">
+<h2 class="section-title"><span data-lang="zh">办学特色</span><span data-lang=en>Features</span></h2>
+<div class="features-grid">
+<div class="feature-card">
+<h3><span data-lang="zh">多元化教育</span><span data-lang=en>Diversified Education</span></h3>
+<p class="feature-hook"><span data-lang="zh">一人一策，精准培养</span><span data-lang=en>Personalized Learning Plan</span></p>
+<div class="feature-detail">
+<p><span data-lang="zh">满足不同学生发展需求</span><span data-lang=en>Meet different student needs</span></p>
+<p><span data-lang="zh">定制服务：每位孩子都是独一无二的个体，我们通过大数据对孩子的学习方式、基础层次、兴趣爱好进行统计分析，学校的心理指导师、职业规划师、班主任、学生导师将会根据学生的特质量身定制，提供个性化的教育服务，在高考选科、发展方向等方面进行专业化的指导，帮助学生形成初步的职业生涯发展规划，使学生学习更具有方向性、针对性和实效性，成就不一样的精彩人生。</span><span data-lang=en>Every child is unique. We use big data to analyze learning styles, foundational levels, and interests. Our counselors and mentors provide personalized services, guiding students in subject selection and career planning.</span></p>
+</div>
+</div>
+<div class="feature-card">
+<h3><span data-lang="zh">文创特色平台</span><span data-lang=en>Creative Platform</span></h3>
+<p class="feature-hook"><span data-lang="zh">八学法课堂，激发自主潜能</span><span data-lang=en>Eight Learning Methods</span></p>
+<div class="feature-detail">
+<p><span data-lang="zh">为有才艺的孩子提供平台</span><span data-lang=en>Platform for talented students</span></p>
+<p><span data-lang="zh">以"八学法"课堂教学深度改革和多元特色教育为主要特色，学校本着培养学生自主学习、自主管理、自主发展能力的深层构想，以课堂教学"八学法"的深度课改为突破口，让学生在学习中学会学习、学会探索、学会合作、学会创新，为学生的终身发展奠基。</span><span data-lang=en>With "Eight Learning Methods" as breakthrough, we cultivate students' self-directed learning and innovation abilities for lifelong growth.</span></p>
+</div>
+</div>
+<div class="feature-card">
+<h3><span data-lang="zh">国际化发展</span><span data-lang=en>International Development</span></h3>
+<p class="feature-hook"><span data-lang="zh">与加拿大皇家中学深度合作</span><span data-lang=en>Partnership with Royal High School</span></p>
+<div class="feature-detail">
+<p><span data-lang="zh">2026年4月7日,深圳光明，春色满园，书香致远。在这充满生机与希望的美好时节，一场跨越重洋的教育之约温情绽放——深圳市光明书院与加拿大皇家中学友好学校签约仪式在光明书院会议室隆重举行。未来，两校将围绕<span style="font-weight:bold"></span>师生互访交流、特色课程共建、优质资源共享、中外文化互鉴</span>四大核心板块，扎实推进每一项合作内容。</span><span data-lang=en>On April 7, 2026, Guangming School and Royal High School of Canada held a partnership signing ceremony. The two schools will collaborate on teacher and student exchanges, curriculum development, resource sharing, and cultural exchange.</span></p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- [8] 联系我们 -->
+<div id="contact" style="scroll-margin-top:80px">
+<div class="section-title"><span data-lang="zh">联系我们</span><span data-lang=en>Contact Us</span></div>
+
+<div class="contact-card">
+<div class="contact-row"><span class="contact-label"><span data-lang="zh">招生热线</span><span data-lang=en>Hotline</span></span><span class="contact-value"></span></div>
+<div class="contact-row"><span class="contact-label"><span data-lang="zh">联系人</span><span data-lang=en>Contact</span></span><span class="contact-value"><span data-lang="zh">谭老师</span><span data-lang=en>Mr. Tan</span></span></div>
+<div class="contact-row"><span class="contact-label"></span><span class="contact-value"><span data-lang="zh">陈老师</span><span data-lang=en>Ms. Chen</span><span data-lang="zh">（微信同号）</span><span data-lang=en>(WeChat same)</span></span></div>
+<div class="contact-row"><span class="contact-label"></span><span class="contact-value"><span data-lang="zh">李老师</span><span data-lang=en>Mr. Li</span></span></div>
+<div class="contact-row"><span class="contact-label"></span><span class="contact-value"><span data-lang="zh">胡老师</span><span data-lang=en>Ms. Hu</span></span></div>
+<div class="contact-row"><span class="contact-label"><span data-lang="zh">QQ群</span><span data-lang=en>QQ</span></span><span class="contact-value"></span></div>
+<div class="contact-row"><span class="contact-label"><span data-lang="zh">学校地址</span><span data-lang=en>Address</span></span><span class="contact-value"><span data-lang="zh">深圳市光明区新美路298号</span><span data-lang=en>No. 298 Xinmei Road, Guangming District, Shenzhen</span></span></div>
+</div>
+
+<div class="footer-grid">
+<div class="footer-item"><div class="footer-item-title"><span data-lang="zh">公众号</span><span data-lang=en>WeChat Official</span></div><img src="gzh.jpg" alt="公众号"></div>
+<div class="footer-item"><div class="footer-item-title"><span data-lang="zh">视频号</span><span data-lang=en>Video Channel</span></div><img src="sph.jpg" alt="视频号"></div>
+<div class="footer-item"><div class="footer-item-title"><span data-lang="zh">探校预约</span><span data-lang=en>Visiting appointment</span></div><img src="tx.jpg" alt="探校预约"></div>
+</div>
+<div class="footer-hint"><span data-lang="zh">长按图片识别进入二维码</span><span data-lang=en>Tap to scan QR code</span></div>
+</div>
+
+<div class="footer-notice">本网页由本校2025届校友钱溢萱设计开发,仅为招生宣传与成果展示使用，非官方发布版本。</div>
+<script src="carousel.js"></script>
+<script src="smooth-scroll.js"></script>
+<script>
+
+/**
+ * 数字滚动动画效果（Counter Animation）
+ * 页面滚动到数据区域时，数字从0开始滚动到目标值
+ */
+(function() {
+    // 动画配置参数
+    const CONFIG = {
+        duration: 2000,      // 动画时长：2秒
+        easing: function(t) {
+            // 缓动函数：先加速后减速（ease-out-quart）
+            return 1 - Math.pow(1 - t, 4);
+        }
+    };
+
+    // 存储已触发的元素，避免重复动画
+    const triggeredElements = new WeakSet();
+
+    /**
+     * 执行单个数字的滚动动画
+     * @param {HTMLElement} element - 目标元素
+     * @param {number} target - 目标数值
+     * @param {string} suffix - 后缀（如 % 或 +）
+     */
+    function animateNumber(element, target, suffix) {
+        const startTime = performance.now();
+        const startValue = 0;
+
+        function update(currentTime) {
+            // 计算已过时间比例（0 ~ 1）
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / CONFIG.duration, 1);
+
+            // 应用缓动函数
+            const easedProgress = CONFIG.easing(progress);
+
+            // 计算当前值
+            const currentValue = Math.floor(startValue + (target - startValue) * easedProgress);
+
+            // 更新显示（添加后缀）
+            element.textContent = currentValue + (suffix || '');
+
+            // 动画未完成则继续
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            } else {
+                // 确保最终值准确
+                element.textContent = target + (suffix || '');
+            }
+        }
+
+        requestAnimationFrame(update);
+    }
+
+    /**
+     * 处理元素进入视口的回调
+     * @param {IntersectionObserverEntry[]} entries
+     */
+    function handleIntersection(entries) {
+        entries.forEach(function(entry) {
+            // 元素进入视口且未触发过动画
+            if (entry.isIntersecting && !triggeredElements.has(entry.target)) {
+                triggeredElements.add(entry.target);
+
+                // 获取目标值和后缀
+                const target = parseInt(entry.target.dataset.target, 10);
+                const suffix = entry.target.dataset.suffix || '';
+
+                // 执行动画
+                animateNumber(entry.target, target, suffix);
+            }
+        });
+    }
+
+    // 创建 Intersection Observer 实例
+    const observer = new IntersectionObserver(handleIntersection, {
+        root: null,           // 使用视口作为根
+        rootMargin: '0px',    // 无额外边距
+        threshold: 0.3        // 元素30%可见时触发
+    });
+
+    // 获取所有带 data-target 属性的数字元素并开始监听
+    document.querySelectorAll('.data-number[data-target]').forEach(function(element) {
+        observer.observe(element);
+    });
+})();
+</script>
+   <!百度统计代码！>
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b912b67e8d8eb8d1d06020780fa2227a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>
